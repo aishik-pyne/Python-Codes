@@ -1,8 +1,9 @@
 import  sys, math
 import numpy as np
+from random import randint
 from PyQt5.QtCore import Qt, QBasicTimer
 from PyQt5.QtGui import QColor, QPainter
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QFrame, QDesktopWidget
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QMessageBox
 
 
 class GameOfLife(QMainWindow):
@@ -39,7 +40,7 @@ class Maze(QWidget):
         return self.contentsRect().height() // Maze.MazeSize
 
     def changeColor(self):
-        self.AliveColor = QColor(np.random.randint(256, size=3, dtype=int))
+        self.AliveColor = QColor(randint(0, 255), randint(0, 255), randint(0, 255))
 
     def paintEvent(self, QPaintEvent):
         qp = QPainter()
@@ -71,7 +72,6 @@ class Maze(QWidget):
                     count += 1
         if self.maze[i, j] == 1:
             count -= 1
-        print('count',count)
         return count
 
     def iterate(self):
@@ -84,7 +84,7 @@ class Maze(QWidget):
                 elif self.maze[i, j] == 0:  # currently dead cells
                     if self.aliveNeighbours(i, j) == 3:
                         newmaze[i, j] = 1
-        #print(newmaze)
+        print(self.Speed)
         self.maze = newmaze
         self.update()
 
